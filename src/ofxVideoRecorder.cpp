@@ -53,7 +53,8 @@ void execThread::threadedFunction() {
 
 //===============================
 ofxVideoDataWriterThread::ofxVideoDataWriterThread() {
-	thread.setName("Video Thread");
+	//thread.setName("Video Thread");
+
 };
 #if defined( TARGET_OSX ) || defined( TARGET_LINUX )
 void ofxVideoDataWriterThread::setup(string filePath, lockFreeQueue<ofPixels *> * q) {
@@ -176,7 +177,7 @@ void ofxVideoDataWriterThread::setPipeNonBlocking() {
 
 //===============================
 ofxAudioDataWriterThread::ofxAudioDataWriterThread() {
-	thread.setName("Audio Thread");
+	//thread.setName("Audio Thread");
 };
 
 #if defined( TARGET_OSX ) || defined( TARGET_LINUX )
@@ -654,12 +655,10 @@ bool ofxVideoRecorder::setupCustomOutput(int w, int h, float fps, int sampleRate
 
 bool ofxVideoRecorder::runCustomScript(string script)
 {
-	stringstream cmd;
-	cmd << ffmpegLocation << " -y ";
-
-
-	ofLogNotice("FFMpeg Command") << script << endl;
-	ffmpegThread.setup(script);
+	string cmd = ffmpegLocation + " -y " + script;
+	
+	ofLogNotice("FFMpeg Command") << cmd << endl;
+	ffmpegThread.setup(cmd);
 
 	bIsInitialized = true;
 
